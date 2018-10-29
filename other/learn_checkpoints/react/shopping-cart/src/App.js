@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import CartHeader from './components/CartHeader';
+import CartFooter from './components/CartFooter';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <CartHeader />
-        </header>
+        <CartHeader />
+        <CartFooter />
       </div>
     );
   }
