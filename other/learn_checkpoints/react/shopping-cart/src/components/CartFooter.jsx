@@ -1,8 +1,8 @@
 import React from 'react';
 
-const CartFooter = () => (
+const CartFooter = ({ copyright }) => (
   <nav className="navbar navbar-dark bg-dark">
-    <a className="navbar-brand" href="#footer">&copy; 2018</a>
+    <a className="navbar-brand" href="#footer">&copy; { copyright }</a>
   </nav>
 );
 
