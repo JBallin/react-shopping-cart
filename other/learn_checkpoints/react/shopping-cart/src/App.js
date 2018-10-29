@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import CartHeader from './components/CartHeader';
-import CartFooter from './components/CartFooter';
+import CartHeader from './components/CartHeader.jsx';
+import CartFooter from './components/CartFooter.jsx';
 
 class App extends Component {
   render() {
