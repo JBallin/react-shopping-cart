@@ -53,11 +53,15 @@ class App extends Component {
     this.setState({selected: {id: "", quantity: 0} });
   }
 
+  deleteItem = item => {
+    this.setState(prevState => ({ cartItemsList: prevState.cartItemsList.filter(({id}) => id !== item.id) }))
+  }
+
   render() {
     return (
       <div className="App">
         <CartHeader />
-        <CartItems cartItems={this.state.cartItemsList} />
+        <CartItems cartItems={this.state.cartItemsList} deleteItem={this.deleteItem} />
         <AddItem
           products={this.state.products}
           selected={this.state.selected}
