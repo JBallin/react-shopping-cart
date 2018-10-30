@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import CartHeader from './components/CartHeader.jsx';
 import CartItems from './components/CartItems.jsx';
+import AddItem from './components/AddItem.jsx';
 import CartFooter from './components/CartFooter.jsx';
 
 class App extends Component {
@@ -22,13 +23,47 @@ class App extends Component {
       { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
       { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
     ],
+    selected: {id: "null", quantity: 0},
+    idCounter: 4
+  }
+
+  handleChangeProduct = e => {
+    const id = Number(e.target.value);
+    this.setState(prevState => ({ selected: { quantity: prevState.selected.quantity || 1, id} }));
+  }
+
+  handleChangeQuantity = e => {
+    const quantity = Number(e.target.value);
+    this.setState(prevState => ({ selected: { ...prevState.selected, quantity } }));
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const product = this.state.products.find(p => p.id === this.state.selected.id);
+    const { quantity } = this.state.selected;
+    this.setState(prevState =>
+      ({
+        cartItemsList: [ ...prevState.cartItemsList,
+          { id: prevState.idCounter, product: { ...product, priceInCents: product.priceInCents * quantity }, quantity }
+        ],
+        idCounter: prevState.idCounter + 1,
+      })
+    );
+    this.setState({selected: {id: "null", quantity: 0} });
   }
 
   render() {
     return (
       <div className="App">
         <CartHeader />
-        <CartItems cartItems={CartItemsList} />
+        <CartItems cartItems={this.state.cartItemsList} />
+        <AddItem
+          products={this.state.products}
+          selected={this.state.selected}
+          handleChangeProduct={this.handleChangeProduct}
+          handleChangeQuantity={this.handleChangeQuantity}
+          handleSubmit={this.handleSubmit}
+        />
         <CartFooter copyright={2018} cartItems={this.state.cartItemsList} />
       </div>
     );
