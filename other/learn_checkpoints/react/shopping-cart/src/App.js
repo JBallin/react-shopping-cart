@@ -33,7 +33,8 @@ class App extends Component {
   }
 
   handleChangeQuantity = e => {
-    const quantity = Number(e.target.value);
+    let quantity = Number(e.target.value);
+    if (quantity < 0) quantity = 0;
     this.setState(prevState => ({ selected: { ...prevState.selected, quantity } }));
   }
 
