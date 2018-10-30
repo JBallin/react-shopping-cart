@@ -23,8 +23,8 @@ class App extends Component {
       { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
       { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
     ],
-    selected: {id: "null", quantity: 0},
-    idCounter: 4
+    selected: {id: "", quantity: 0},
+    idCounter: 4,
   }
 
   handleChangeProduct = e => {
@@ -49,7 +49,7 @@ class App extends Component {
         idCounter: prevState.idCounter + 1,
       })
     );
-    this.setState({selected: {id: "null", quantity: 0} });
+    this.setState({selected: {id: "", quantity: 0} });
   }
 
   render() {

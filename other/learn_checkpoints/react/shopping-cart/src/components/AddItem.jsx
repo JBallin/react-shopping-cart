@@ -10,7 +10,7 @@ const AddItem = ({ products, selected, handleSubmit, handleChangeProduct, handle
       <div className="form-group">
         <label htmlFor="product">Product</label>
         <select name="product" onChange={handleChangeProduct} value={selected.id} className="form-control">
-          <option disabled={true} value="null">Select an option...</option>
+          <option disabled={true} value="">Select an option...</option>
           { products.map(p => <option key={p.id} value={p.id}>{p.name}</option>) }
         </select>
       </div>
