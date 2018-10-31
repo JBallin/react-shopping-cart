@@ -13,34 +13,16 @@ class App extends Component {
       { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
       { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 },
     ],
-    selected: {id: "", quantity: 0},
-    idCounter: 4,
   }
 
-  handleChangeProduct = e => {
-    const id = Number(e.target.value);
-    this.setState(prevState => ({ selected: { quantity: prevState.selected.quantity || 1, id} }));
-  }
-
-  handleChangeQuantity = e => {
-    let quantity = Number(e.target.value);
-    if (quantity < 0) quantity = 0;
-    this.setState(prevState => ({ selected: { ...prevState.selected, quantity } }));
-  }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const product = this.state.products.find(p => p.id === this.state.selected.id);
-    const { quantity } = this.state.selected;
-    this.setState(prevState =>
-      ({
-        cartItemsList: [ ...prevState.cartItemsList,
-          { id: prevState.idCounter, product: { ...product, priceInCents: product.priceInCents * quantity }, quantity }
-        ],
-        idCounter: prevState.idCounter + 1,
-      })
-    );
-    this.setState({selected: {id: "", quantity: 0} });
+  handleSubmit = selected => {
+    const product = products.find(p => p.id === selected.id);
+    const { quantity } = selected;
+    const lastItem = this.state.cartItemsList.slice(-1)[0];
+    const id = lastItem ? lastItem.id + 1 : 1;
+    const priceInCents = product.priceInCents * quantity;
+    const addedItem = { id, product: { ...product, priceInCents }, quantity };
+    this.setState(prevState => ({ cartItemsList: [ ...prevState.cartItemsList, addedItem] }));
   }
 
   deleteItem = item => {
@@ -52,13 +34,7 @@ class App extends Component {
       <div className="App">
         <CartHeader />
         <CartItems cartItems={this.state.cartItemsList} deleteItem={this.deleteItem} />
-        <AddItem
-          products={this.state.products}
-          selected={this.state.selected}
-          handleChangeProduct={this.handleChangeProduct}
-          handleChangeQuantity={this.handleChangeQuantity}
-          handleSubmit={this.handleSubmit}
-        />
+        <AddItem products={products} handleSubmit={this.handleSubmit} />
         <CartFooter copyright={2018} cartItems={this.state.cartItemsList} />
       </div>
     );
