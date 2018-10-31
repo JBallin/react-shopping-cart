@@ -20,7 +20,7 @@ class AddItem extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.handleSubmit(this.state.selected);
+    this.props.addToCart(this.state.selected);
     this.setState({ selected: {id: '', quantity: ''} })
   }
 

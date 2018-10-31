@@ -15,7 +15,7 @@ class App extends Component {
     ],
   }
 
-  handleSubmit = selected => {
+  addToCart = selected => {
     const product = products.find(p => p.id === selected.id);
     const { quantity } = selected;
     const lastItem = this.state.cartItemsList.slice(-1)[0];
@@ -25,7 +25,7 @@ class App extends Component {
     this.setState(prevState => ({ cartItemsList: [ ...prevState.cartItemsList, addedItem] }));
   }
 
-  deleteItem = item => {
+  removeFromCart = item => {
     this.setState(prevState => ({ cartItemsList: prevState.cartItemsList.filter(({id}) => id !== item.id) }))
   }
 
@@ -33,8 +33,8 @@ class App extends Component {
     return (
       <div className="App">
         <CartHeader />
-        <CartItems cartItems={this.state.cartItemsList} deleteItem={this.deleteItem} />
-        <AddItem products={products} handleSubmit={this.handleSubmit} />
+        <CartItems cartItems={this.state.cartItemsList} removeFromCart={this.removeFromCart} />
+        <AddItem products={products} addToCart={this.addToCart} />
         <CartFooter copyright={2018} cartItems={this.state.cartItemsList} />
       </div>
     );

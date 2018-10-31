@@ -2,7 +2,7 @@ import React from 'react';
 import CartItem from './CartItem.jsx';
 import { toDollars } from '../utils/formatCurrency';
 
-const CartItems = ({ cartItems, deleteItem }) => {
+const CartItems = ({ cartItems, removeFromCart }) => {
   const totalInCents = cartItems.reduce((total, item) => total + item.product.priceInCents, 0);
   const total = toDollars(totalInCents/100);
   return (
@@ -15,7 +15,7 @@ const CartItems = ({ cartItems, deleteItem }) => {
             <div className="col-md-2">Quantity</div>
           </div>
         </div>
-        { cartItems.map(item => <CartItem key={item.id} item={item} deleteItem={deleteItem} />) }
+        { cartItems.map(item => <CartItem key={item.id} item={item} removeFromCart={removeFromCart} />) }
       </div>
       <div className="text-right mt-2">
         <p className="font-weight-bold">Total: {total}</p>
