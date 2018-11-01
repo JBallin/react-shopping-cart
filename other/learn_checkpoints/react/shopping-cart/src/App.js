@@ -20,14 +20,16 @@ class App extends Component {
     this.setState({ products, cartItems });
   }
 
-  addToCart = selected => {
-    const product = this.state.products.find(p => p.id === selected.id);
-    const { quantity } = selected;
-    const lastItem = this.state.cartItems.slice(-1)[0];
-    const id = lastItem ? lastItem.id + 1 : 1;
-    const priceInCents = product.priceInCents * quantity;
-    const addedItem = { id, product: { ...product, priceInCents }, quantity };
-    this.setState(prevState => ({ cartItems: [ ...prevState.cartItems, addedItem] }));
+  addToCart = async (newItem) => {
+    const postResponse = await fetch(`${API_URL}/items`, {
+      method: 'POST',
+      body: JSON.stringify(newItem),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const item = await postResponse.json();
+    this.setState(prevState => ({ cartItems: [ ...prevState.cartItems, item ] }));
   }
 
   removeFromCart = item => {

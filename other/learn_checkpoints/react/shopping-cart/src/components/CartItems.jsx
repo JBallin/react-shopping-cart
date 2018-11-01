@@ -3,8 +3,22 @@ import CartItem from './CartItem.jsx';
 import { toDollars } from '../utils/formatCurrency';
 
 const CartItems = ({ cartItems, removeFromCart, products }) => {
-  const totalInCents = cartItems.reduce((sum, item) => sum + products[item.product_id - 1].priceInCents, 0);
+  const getProduct = (id) => products.find(p => p.id === id);
+
+  const totalInCents = cartItems.reduce((sum, item) => {
+    return sum + getProduct(item.product_id).priceInCents * item.quantity;
+  }, 0);
   const total = toDollars(totalInCents/100);
+
+  const cartItemsComponents = cartItems.map(item => (
+    <CartItem
+      key={item.id}
+      product={getProduct(item.product_id)}
+      item={item}
+      removeFromCart={removeFromCart}
+    />
+  ));
+
   return (
     <div className="container mt-5">
       <div className="list-group">
@@ -15,7 +29,7 @@ const CartItems = ({ cartItems, removeFromCart, products }) => {
             <div className="col-md-2">Quantity</div>
           </div>
         </div>
-        { cartItems.map(item => <CartItem key={item.id} product={products[item.product_id - 1]} item={item} removeFromCart={removeFromCart} />) }
+        { cartItemsComponents }
       </div>
       <div className="text-right mt-2">
         <p className="font-weight-bold">Total: {total}</p>
