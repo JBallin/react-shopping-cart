@@ -5,6 +5,8 @@ import CartItems from './components/CartItems.jsx';
 import AddItem from './components/AddItem.jsx';
 import CartFooter from './components/CartFooter.jsx';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 class App extends Component {
   state = {
     cartItems: [],
@@ -12,9 +14,8 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const { REACT_APP_API_URL } = process.env;
-    const fetchProducts = fetch(`${REACT_APP_API_URL}/products`).then(r => r.json());
-    const fetchItems = fetch(`${REACT_APP_API_URL}/items`).then(r => r.json());
+    const fetchProducts = fetch(`${API_URL}/products`).then(r => r.json());
+    const fetchItems = fetch(`${API_URL}/items`).then(r => r.json());
     const [products, cartItems] = await Promise.all([fetchProducts, fetchItems]);
     this.setState({ products, cartItems });
   }
