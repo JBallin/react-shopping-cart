@@ -33,15 +33,15 @@ class AddItem extends React.Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="quantity">Quantity</label>
-            <input type="number" name="quantity" value={selected.quantity} onChange={this.handleChangeQuantity} className="form-control" />
-          </div>
-          <div className="form-group">
             <label htmlFor="product">Product</label>
             <select name="product" onChange={this.handleChangeProduct} value={selected.product_id} className="form-control">
               <option disabled={true} value="">Select an option...</option>
               { products.map(p => <option key={p.id} value={p.id}>{`${ p.name } (${ toDollars(p.priceInCents/100) })`}</option>) }
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="quantity">Quantity</label>
+            <input type="number" name="quantity" value={selected.quantity} onChange={this.handleChangeQuantity} className="form-control" />
           </div>
           <div className="form-group">
             <button className="btn btn-primary" disabled={!selected.product_id || !selected.quantity}>Add to cart</button>
