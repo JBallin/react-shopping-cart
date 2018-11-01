@@ -32,7 +32,7 @@ class App extends Component {
     this.setState(prevState => ({ cartItems: [ ...prevState.cartItems, item ] }));
   }
 
-  removeFromCart = item => {
+  removeFromCart = async (item) => {
     this.setState(prevState => ({ cartItems: prevState.cartItems.filter(({id}) => id !== item.id) }))
   }
 
