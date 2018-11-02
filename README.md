@@ -9,7 +9,7 @@ Basic shopping cart app that stores data in-memory using an [API](https://g-api.
 To run this locally you'll need to overwrite the `API_URL` to use the deployed API on heroku because the repo for the API is private:
 
 ```shell
-$ echo "REACT_APP_API_URL=https://g-api.herokuapp.com/api" > .env
+$ echo "REACT_APP_API_URL=https://g-api.herokuapp.com/api" > .env.development
 ```
 
 This was build with Create React App and can be run using:
