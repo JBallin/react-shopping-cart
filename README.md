@@ -12,7 +12,7 @@ To run this locally you'll need to overwrite the `API_URL` to use the deployed A
 $ echo "REACT_APP_API_URL=https://g-api.herokuapp.com/api" > .env.development
 ```
 
-This was build with Create React App and can be run using:
+This was built using [Create React App](https://github.com/facebook/create-react-app) and can be run using:
 
 ```shell
 $ yarn install
