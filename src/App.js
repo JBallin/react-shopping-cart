@@ -33,7 +33,8 @@ class App extends Component {
   }
 
   removeFromCart = async (item) => {
-    this.setState(prevState => ({ cartItems: prevState.cartItems.filter(({id}) => id !== item.id) }))
+    await fetch(`${API_URL}/items/${item.id}`, { method: 'Delete' });
+    this.setState(prevState => ({ cartItems: prevState.cartItems.filter(({id}) => id !== item.id) }));
   }
 
   render() {
