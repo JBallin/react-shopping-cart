@@ -4,20 +4,31 @@ import CartHeader from './components/CartHeader.jsx';
 import CartItems from './components/CartItems.jsx';
 import AddItem from './components/AddItem.jsx';
 import CartFooter from './components/CartFooter.jsx';
+import Spinner from './components/Spinner.jsx';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 class App extends Component {
   state = {
     cartItems: [],
-    products: []
+    products: [],
+    isLoading: true,
+    error: false,
   };
 
   async componentDidMount() {
+    const delay = 700;
+    const delayedPromise = new Promise(resolve => setTimeout(resolve, delay));
     const fetchProducts = fetch(`${API_URL}/products`).then(r => r.json());
     const fetchItems = fetch(`${API_URL}/items`).then(r => r.json());
-    const [products, cartItems] = await Promise.all([fetchProducts, fetchItems]);
-    this.setState({ products, cartItems });
+    try {
+      const promisesResult = await Promise.all([fetchProducts, fetchItems, delayedPromise]);
+      const [products, cartItems] = promisesResult.slice(0,2);
+      this.setState({ products, cartItems, isLoading: false });
+    }
+    catch (err) {
+      this.setState({error: `Error fetching API`, isLoading: false })
+    }
   }
 
   addToCart = async (newItem) => {
@@ -38,12 +49,24 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <CartHeader />
+    const cart = (
+      <div>
         <CartItems cartItems={this.state.cartItems} products={this.state.products} removeFromCart={this.removeFromCart} />
         <AddItem products={this.state.products} addToCart={this.addToCart} />
         <CartFooter copyright={2018} cartItems={this.state.cartItems} />
+      </div>
+    );
+
+    const error = (
+      <div className="container mt-4">
+        <h3>{this.state.error}</h3>
+      </div>
+    );
+
+    return (
+      <div className="App">
+        <CartHeader />
+        { this.state.isLoading ? <Spinner /> : this.state.error ? error : cart }
       </div>
     );
   }
